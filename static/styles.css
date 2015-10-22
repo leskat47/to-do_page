@@ -1,0 +1,19 @@
+h1 {
+	padding-bottom: 10px;
+}
+section {
+	padding: 20px 10px 0px 0px;
+}
+div.bar {
+    display: inline-block;
+    width: 20px;
+    height: 75px;   /* We'll override this later */
+    background-color: teal;
+    margin-right: 2px;
+}
+svg {
+	background-color: lightblue;
+}
+text {
+	fill: black;
+}
