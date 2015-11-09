@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="google-signin-client_id" content="82710716223-oc9i2lb1o2ttovka73jblve3uknq4392.apps.googleusercontent.com">
+        <title>Daily to-do</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="static/styles.css">
+        <script type="text/javascript" src="../d3_sample/d3/d3.v3.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <script src="myscript.js"></script>
+    </head>
+    <body>
+    <div class="container-fluid">
+        <h1>
+            What's on your to-do list today?
+        </h1>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <div class="row">
+            <div class="col-md-6">
+                <section>
+                    <form class="input-append form-group form-inline">
+                            <p id="todolist">
+                            <span id="set1">
+                                <input type="checkbox" class="item1 check form-control" id="check1">
+                                <input type="text" class="form-control"id="description" placeholder="description" style="width: 200px">
+                                <input type="number" class="item1 points form-control" id="points1" placeholder="points" style="width: 80px">
+                                <button id="remove1" class="btn btn-danger remove-me form-control" style="inline">-</button>
+                            </span>
+                            <br>
+                            <button id="b1" class="btn add-more" type="button">Add more</button>
+                            </p>
+                    </form>
+                <p id="goal"></p>
+                </section>
+            </div>
+            <div class="col-md-6">
+                <h2>Let's Get Started!</h2>
+                <figure>
+                </figure>
+            </div>
+        </div>
+    </div>
+
+    <a href="#" onclick="signOut();">Sign out</a>
+    </body>
+</html>
