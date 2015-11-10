@@ -14,6 +14,7 @@ $( document ).ready(function() {
           console.log('User signed out.');
         });
       }
+      
     var myPoints = 0;
     var next = 1;
     var completed = 0;
