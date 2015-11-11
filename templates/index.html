@@ -6,9 +6,9 @@
         <title>Daily to-do</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <link rel="stylesheet" href="static/styles.css">
-        <script type="text/javascript" src="templates/d3.v3.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <script src="/static/d3.v3.js"></script>
         <script src="/static/myscript.js"></script>
     </head>
     <body>
@@ -16,7 +16,7 @@
         <h1>
             What's on your to-do list today?
         </h1>
-        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <div class="g-signin2" data-onsuccess="onSignIn" id="signin"></div>
         <div class="row">
             <div class="col-md-6">
                 <section>
@@ -32,7 +32,8 @@
                             <button id="b1" class="btn add-more" type="button">Add more</button>
                             </p>
                     </form>
-                <p id="goal"></p>
+                    <p id="goal"></p>
+                    <a href="#" id="signout"><button class="btn">Sign out</button></a>
                 </section>
             </div>
             <div class="col-md-6">
@@ -43,6 +44,37 @@
         </div>
     </div>
 
-    <a href="#" onclick="signOut();">Sign out</a>
+
+    <script>
+    function onSignIn(googleUser) {
+      var profile = googleUser.getBasicProfile();
+      console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+      console.log('Name: ' + profile.getName());
+      console.log('Image URL: ' + profile.getImageUrl());
+      console.log('Email: ' + profile.getEmail());
+
+
+      var id_token = googleUser.getAuthResponse().id_token;
+      console.log(id_token);
+      token_url = 'https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=' + id_token
+      
+      $.get(token_url, function(data) {
+        aud = {'aud': data["aud"]}
+        $.post("/tokencheck", 
+            aud, 
+            function(adata) {
+            console.log(adata)
+            })
+      })
+    //   var xhr = new XMLHttpRequest();
+    //   xhr.open('POST', '/tokensignin');
+    //   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    //   xhr.onload = function() {
+    //   console.log('Signed in as: ' + xhr.responseText);
+    // };
+    // xhr.send('idtoken=' + id_token);
+    }
+
+    </script>
     </body>
 </html>
