@@ -1,5 +1,26 @@
 $( document ).ready(function() {
+    function onSignIn(googleUser) {
+      var profile = googleUser.getBasicProfile();
+      console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+      console.log('Name: ' + profile.getName());
+      console.log('Image URL: ' + profile.getImageUrl());
+      console.log('Email: ' + profile.getEmail());
 
+
+      var id_token = googleUser.getAuthResponse().id_token;
+      console.log(id_token);
+      token_url = 'https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=' + id_token;
+      
+      $.get(token_url, function(data) {
+        aud = {'aud': data["aud"]};
+        $.post("/tokencheck",
+            aud,
+            function(adata) {
+            console.log(adata);
+            });
+      });
+
+    }
     document.getElementById("signout").addEventListener("click", signOut);
 
     function signOut() {
@@ -15,20 +36,20 @@ $( document ).ready(function() {
     var dataset = [];
     $(".add-more").click(function(e){
         e.preventDefault();
-        if ($("span").length == 0) {
-            console.log("none")
+        if ($("span").length === 0) {
+            console.log("none");
             var newIn = '</p><p><span id="set1"><input type="checkbox" class="item1 check form-control" id="check1"> <input class="input form-control" id="description" type="text" placeholder="description" style="width: 200px"> <input type="number" class="item1" points form-control" id="points1" placeholder="points" style="width: 80px"> <button id="remove1" class="btn btn-danger remove-me form-control" style="inline">-</button></span>';
-            $("#todolist").prepend(newIn)
+            $("#todolist").prepend(newIn);
         }
         var addto = "#set" + next;
         var addRemove = "#points" + next;
-        next++
+        next++;
 
-        var newIn = '</p><p><span id="set' + next + '"><input type="checkbox" class="item' + next + 
+        var newIn = '</p><p><span id="set' + next + '"><input type="checkbox" class="item' + next +
         ' check form-control" id="check"' + next +
-        '> <input class="input form-control" id="description" type="text" placeholder="description" style="width: 200px"> <input type="number" class="item' + next + 
-        ' points form-control" id="points' + next + 
-        ' " placeholder="points" style="width: 80px"> <button id="remove' + next + 
+        '> <input class="input form-control" id="description" type="text" placeholder="description" style="width: 200px"> <input type="number" class="item' + next +
+        ' points form-control" id="points' + next +
+        ' " placeholder="points" style="width: 80px"> <button id="remove' + next +
         '" class="btn btn-danger remove-me form-control" style="inline">-</button></span>';
 
         // var removeBtn = '<button id="remove' + (next - 1) + 
@@ -58,7 +79,7 @@ $( document ).ready(function() {
         return possiblePoints;
     }
     function calcCompletion() {
-        completed = $("input[type='checkbox']:checked").length
+        completed = $("input[type='checkbox']:checked").length;
         pctCompleted = completed/next;
         console.log(pctCompleted);
         dataset = [completed, next];
