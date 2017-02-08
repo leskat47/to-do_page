@@ -1,9 +1,6 @@
-from flask import Flask, redirect, render_template, url_for, session, request
+from flask import Flask, render_template, request
 # from flask_oauth import OAuth
-from oauth2client import client, crypt
 import os
-import requests
-
 
 # You must configure these 3 values from Google APIs console
 # https://code.google.com/apis/console
@@ -17,10 +14,11 @@ app.debug = DEBUG
 app.secret_key = "a_seeeecrit"
 # oauth = OAuth()
 
+
 @app.route("/")
 def index():
-
     return render_template("index.html")
+
 
 @app.route("/tokencheck", methods=['POST'])
 def tokencheck():
@@ -33,13 +31,9 @@ def tokencheck():
         return "success"
     else:
         return "fail"
-    # r = requests.get('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=')
 
     # try:
     #     idinfo = client.verify_id_token(token, CLIENT_ID)
-    #     # If multiple clients access the backend server:
-    #     if idinfo['aud'] not in [ANDROID_CLIENT_ID, IOS_CLIENT_ID, WEB_CLIENT_ID]:
-    #         raise crypt.AppIdentityError("Unrecognized client.")
     #     if idinfo['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
     #         raise crypt.AppIdentityError("Wrong issuer.")
     #     if idinfo['hd'] != APPS_DOMAIN_NAME:
